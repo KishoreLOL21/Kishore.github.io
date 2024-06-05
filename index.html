@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="invoiceApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Invoice Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="InvoiceController">
+<div class="container">
+    <h1>Online Invoice Generator</h1>
+    <div class="invoice-form">
+        <label for="invoiceNumber">Invoice Number:</label>
+        <input type="text" id="invoiceNumber" ng-model="invoice.invoiceNumber"><br><br>
+
+        <label for="billFrom">Bill From:</label>
+        <input type="text" id="billFrom" ng-model="invoice.billFrom"><br><br>
+
+        <label for="billTo">Bill To:</label>
+        <input type="text" id="billTo" ng-model="invoice.billTo"><br><br>
+
+        <label for="contactNumber">Contact Number:</label>
+        <input type="text" id="contactNumber" ng-model="invoice.contactNumber"><br><br>
+
+        <label for="gstNumber">GST Number:</label>
+        <input type="text" id="gstNumber" ng-model="invoice.gstNumber"><br><br>
+
+        <label for="customerName">Customer Name:</label>
+        <input type="text" id="customerName" ng-model="invoice.customerName"><br><br>
+
+        <label for="invoiceDate">Invoice Date:</label>
+        <input type="date" id="invoiceDate" ng-model="invoice.invoiceDate"><br><br>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Item Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in invoice.items">
+                <td><input type="text" ng-model="item.description"></td>
+                <td><input type="number" ng-model="item.quantity" ng-change="updateTotal(item)"></td>
+                <td><input type="number" ng-model="item.unitPrice" ng-change="updateTotal(item)"></td>
+                <td>{{ '₹' + item.total }}</td>
+                <td><button ng-click="removeItem($index)">Remove</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <button ng-click="addItem()">Add Item</button>
+
+        <h3>Total: {{ '₹' + invoiceTotal }}</h3>
+        <button ng-click="generatePDF()">Generate PDF</button>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
